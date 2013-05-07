@@ -13,7 +13,7 @@ import socket, sys, threading, time
  
 # Hardcoding the root admin - it seems the best way for now
 root_admin = "abhiin1947"
- 
+remember = []
 # Defining a class to run the server. One per connection. This class will do most of our work.
 class IRC_Server:
  
@@ -158,23 +158,23 @@ class IRC_Server:
        
             if (command[0] == "hi"):
                 self.send_message_to_channel( ("Hello to you too, " + user), channel )
-            if (command[0] == "panni"):
+            elif (command[0] == "panni"):
                 self.send_message_to_channel( ("Please do not use bad words in this group(unless using those words to abuse KarSub :P) " + user), channel )
-            if (command[0] == "stupidsql"):
+            elif (command[0] == "stupidsql"):
                 self.send_message_to_channel( ("insert into forward_contracts (spot_rate, carrying_cost, margin, timestamp) values ('53.05', '0.75','0.1', now());"), channel )
-            if ("poda" in command[0] and "ng" in command[0]):
+            elif ("poda" in command[0] and "ng" in command[0]):
                 self.send_message_to_channel( ("** Start Music!! **"), channel )
-            if (command[0] == "whoami"):
+            elif (command[0] == "whoami"):
                 self.send_message_to_channel( user, channel )
-            if (command[0].lower() == "whoru" or command[0].lower() == "whoareu" or command[0].lower() == "whoareyou"):
+            elif (command[0].lower() == "whoru" or command[0].lower() == "whoareu" or command[0].lower() == "whoareyou"):
                 self.send_message_to_channel( "The only bittumani!", channel )
-            if (command[0] == ":'(" or command[0] == "cry"):
+            elif (command[0] == ":'(" or command[0] == "cry"):
                 self.send_message_to_channel( "It's okay " + user + " everything will be just fine. :)", channel )
-            if (command[0] == "hedgerepo"):
+            elif (command[0] == "hedgerepo"):
                 self.send_message_to_channel( "stockscrape: https://github.com/makkarlabs/stockscrape.git ", channel )
                 self.send_message_to_channel( "hedge_jobs: https://bitbucket.org/the_real_slim_karthik/hedge_jobs", channel )
                 self.send_message_to_channel( "hedge_app: https://bitbucket.org/yeskarthik/hedge_app",channel )
-            if (command[0] == "stepstocompile"):
+            elif (command[0] == "stepstocompile"):
                 self.send_message_to_channel( "1. Clone all 3 repos(type !hedgerepo)", channel )
                 self.send_message_to_channel( "2. Copy default_config to config.py. Modify config.py in those repos(set mysql auth etc)", channel )
                 self.send_message_to_channel( "3. Execute all files in hedge_jobs *important*", channel )
@@ -185,15 +185,27 @@ class IRC_Server:
                 self.send_message_to_channel( "8. Execute mysql query(type !stupidsql) *important*", channel )
                 self.send_message_to_channel( "9. python runserver.py", channel )
                 self.send_message_to_channel( "10. Thank Abhinandan for creating this wonderful tutorial :P", channel )
-            if(command[0] == "amigoodboy"):
+            elif(command[0] == "amigoodboy"):
                 if(user == "abhiin1947"):
                     self.send_message_to_channel( "You are the best! :D", channel )
                 else:
                     self.send_message_to_channel( "panni! bad boy!!! :-|", channel )
+            else:
+                for x in remember:
+                    if(command[0] == x['cname']):
+                        self.send_message_to_channel( x['data'], channel )
+                        break
         else:
-            
             if (command[0] == "bop"):
                 self.send_message_to_channel( ("\x01ACTION bopz " + str(command[1]) + "\x01"), channel )
+            if (command[0] == "remember"):
+                data = {}
+                data['cname'] = command[1]
+                data['data'] = ""
+                for x in command[2:]:
+                    data['data'] += x+" "
+                remember.append(data)
+
            
  
 # Here begins the main programs flow:
