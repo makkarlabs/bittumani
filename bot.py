@@ -174,7 +174,23 @@ class IRC_Server:
                 self.send_message_to_channel( "stockscrape: https://github.com/makkarlabs/stockscrape.git ", channel )
                 self.send_message_to_channel( "hedge_jobs: https://bitbucket.org/the_real_slim_karthik/hedge_jobs", channel )
                 self.send_message_to_channel( "hedge_app: https://bitbucket.org/yeskarthik/hedge_app",channel )
-        else:    
+            if (command[0] == "stepstocompile"):
+                self.send_message_to_channel( "1. Clone all 3 repos(type !hedgerepo)", channel )
+                self.send_message_to_channel( "2. Copy default_config to config.py. Modify config.py in those repos(set mysql auth etc)", channel )
+                self.send_message_to_channel( "3. Execute all files in hedge_jobs *important*", channel )
+                self.send_message_to_channel( "4. Goto hedge_app folder and open python terminal", channel )
+                self.send_message_to_channel( "5. 'from hedge_app import db'", channel )
+                self.send_message_to_channel( "6. 'db.create_all()'", channel )
+                self.send_message_to_channel( "7. Open mysql terminal", channel )
+                self.send_message_to_channel( "8. Execute mysql query(type !stupidsql) *important*", channel )
+                self.send_message_to_channel( "9. python runserver.py", channel )
+                self.send_message_to_channel( "10. Thank Abhinandan for creating this wonderful tutorial :P", channel )
+            if(command[0] == "amigoodboy"):
+                if(user == "abhiin1947"):
+                    self.send_message_to_channel( "You are the best! :D", channel )
+                else:
+                    self.send_message_to_channel( "panni! bad boy!!! :-|", channel )
+        else:
             
             if (command[0] == "bop"):
                 self.send_message_to_channel( ("\x01ACTION bopz " + str(command[1]) + "\x01"), channel )
