@@ -20,7 +20,7 @@ class IRC_Server:
     # The default constructor - declaring our global variables
     # channel should be rewritten to be a list, which then loops to connect, per channel.
     # This needs to support an alternate nick.
-    def __init__(self, host, port, nick, channel , password ="ronaldo"):
+    def __init__(self, host, port, nick, channel , password = "ronaldo"):
         self.irc_host = host
         self.irc_port = port
         self.irc_nick = nick
@@ -164,7 +164,18 @@ class IRC_Server:
                 self.send_message_to_channel( ("insert into forward_contracts (spot_rate, carrying_cost, margin, timestamp) values ('53.05', '0.75','0.1', now());"), channel )
             if ("poda" in command[0] and "ng" in command[0]):
                 self.send_message_to_channel( ("** Start Music!! **"), channel )
-        else:
+            if (command[0] == "whoami"):
+                self.send_message_to_channel( user, channel )
+            if (command[0].lower() == "whoru" or command[0].lower() == "whoareu" or command[0].lower() == "whoareyou"):
+                self.send_message_to_channel( "The only bittumani!", channel )
+            if (command[0] == ":'(" or command[0] == "cry"):
+                self.send_message_to_channel( "It's okay " + user + " everything will be just fine. :)", channel )
+            if (command[0] == "hedgerepo"):
+                self.send_message_to_channel( "stockscrape: https://github.com/makkarlabs/stockscrape.git ", channel )
+                self.send_message_to_channel( "hedge_jobs: https://bitbucket.org/the_real_slim_karthik/hedge_jobs", channel )
+                self.send_message_to_channel( "hedge_app: https://bitbucket.org/yeskarthik/hedge_app",channel )
+        else:    
+            
             if (command[0] == "bop"):
                 self.send_message_to_channel( ("\x01ACTION bopz " + str(command[1]) + "\x01"), channel )
            
