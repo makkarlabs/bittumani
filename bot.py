@@ -9,7 +9,7 @@
 # version 0.101
 # Fixed an error if an admin used a command with an argument, that wasn't an admin-only command
  
-import socket, sys, threading, time
+import socket, sys, threading, time, smtplib, config
  
 # Hardcoding the root admin - it seems the best way for now
 root_admin = "abhiin1947"
@@ -105,7 +105,13 @@ class IRC_Server:
             self.irc_sock.send (str_buff.encode())
             # This needs to modify the list of active channels
    
-       
+    def sendEmail(fromAddr, toAddr, message):
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(username, password)
+        server.sendmail(fromAddr, toAddr, message)
+        server.quit()
+
     # This nice function here runs ALL the commands.
     # For now, we only have 2: root admin, and anyone.
     def process_command(self, user, channel):
